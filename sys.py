@@ -20,6 +20,7 @@ road_name_dic = {(1,1):0,(1,-1):1,(2,1):2,(2,-1):3,(3,1):4,(3,-1):5,(4,1):6,(4,-
 
 
 
+
 def sys():
     # if float(get_wind_1()[1]) == 0:
     #     print('1')
@@ -27,6 +28,7 @@ def sys():
     # else:
     shift_position = pd.DataFrame (np.zeros((2,35)),index = ('x','y'),columns = range(1,36),dtype=np.float64)
     #print(shift_position)
+    scale_1 =0
     for i in range(1,18):
         squence = road_name_dic[(i,1)]
         position_1 = OD_list_set[squence][0]
@@ -36,19 +38,27 @@ def sys():
         x2 = float(array.iloc[position_2-1,4].split(',',1)[0])
         y2 = float(array.iloc[position_2-1,4].split(',',1)[1])
         wind = get_wind_1()[0]
+        #print(i,shift_coordinate((x2+x1)/2,(y1+y2)/2,235.466633,-29062528.194120,wind),wind)
         #print(position_1,x1,y1,position_2,x2,y2,wind)
-        # shift_road(x1,y1,x2,y2,wind)
+        #shift_road(x1,y1,x2,y2,wind)
         shift_position.loc['x',position_1] = shift_road(x1,y1,x2,y2,wind)[0]
         shift_position.loc['y',position_1] = shift_road(x1,y1,x2,y2,wind)[1]
         shift_position.loc['x',position_2]= shift_road(x1,y1,x2,y2,wind)[2]
         shift_position.loc['y',position_2] = shift_road(x1,y1,x2,y2,wind)[3]
-
-    # pd.set_option('display.max_columns', None)
-    # print(shift_position)
-        dd = math.sqrt((x2-x1)**2+(y2-y1)**2)
-        scale = (416)/dd
-        true_dis = how_far(shift_road(x1,y1,x2,y2,wind)[0],shift_road(x1,y1,x2,y2,wind)[1],shift_road(x1,y1,x2,y2,wind)[2],shift_road(x1,y1,x2,y2,wind)[3])*scale
-        t = true_dis/get_wind_1()[1]
+        # print(shift_coordinate((x1+x2)/2,(y1+y2)/2,235.466633,-29062528.194120,wind))
+        # print(shift_road(x1,y1,x2,y2,wind))
+        # print(how_far(shift_road(x1,y1,x2,y2,wind)[0],shift_road(x1,y1,x2,y2,wind)[1],shift_road(x1,y1,x2,y2,wind)[2],shift_road(x1,y1,x2,y2,wind)[3]))
+        # print(scale_1)
+        if i == 1:
+            dd = math.sqrt((x2-x1)**2+(y2-y1)**2)
+            scale_1 = (416)/dd
+            #print(scale_1)
+            #以米计    
+            dis = np.sqrt((x2-x1)**2+(y2-y1)**2)
+            print(dis*scale_1)    
+        else:
+            dis = np.sqrt((x2-x1)**2+(y2-y1)**2)
+            print(dis*scale_1)  
         
 sys()
 

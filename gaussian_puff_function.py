@@ -70,13 +70,13 @@ def calculate(x1,y1,x2,y2,q,u,wind):
 
     
 def how_far(point1x,point1y,point2x,point2y):
-    x_recept = -29062528.194120
-    y_recpet = 235.466633
-    k = (point2y-point1y)/(point2x-point1x)
-    b = (point1y-k*point1x)
-    distance = np.abs((k*x_recept+y_recpet+b)/np.sqrt(k**2+1))
+    x_recept = 235.466633
+    y_recpet = -29062528.194120  
+    a = point2y-point1y
+    b = point1x-point2x
+    c = point1y*(point2x-point1x)-(point2y-point1y)*point1x
+    distance = np.abs((a*x_recept+b*y_recpet+c)/np.sqrt(a**2+b**2))
     return distance
-
 
 
 
